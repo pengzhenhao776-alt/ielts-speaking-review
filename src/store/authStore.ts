@@ -75,8 +75,8 @@ export const useAuthStore = create<AuthState>()(
         set({ currentUser: null })
         if (user?.role === 'visitor') {
           try {
-            localStorage.removeItem('ielts_decks')
-            localStorage.removeItem('ielts_templates')
+            localStorage.removeItem('ielts_decks_v2')
+            localStorage.removeItem('ielts_templates_v2')
           } catch {}
         }
       },

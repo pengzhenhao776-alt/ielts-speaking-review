@@ -14,12 +14,15 @@ export default function StudentHome() {
   const templates = useTemplateStore((s) => s.templates)
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
 
-  // Auto-import demo data for demo users
+  // Auto-import demo data for visitor users
   useEffect(() => {
     if (currentUser?.role !== 'visitor') return
     const store = useDeckStore.getState()
     const tplStore = useTemplateStore.getState()
-    if (store.decks.length > 0 || tplStore.templates.length > 0) return
+
+    // Force clear any leftover data from previous users, then import demo subset
+    useDeckStore.setState({ decks: [] })
+    useTemplateStore.setState({ templates: [] })
 
     // Import first 2 decks with first 5 cards each
     for (let d = 0; d < Math.min(2, seedDecks.length); d++) {
