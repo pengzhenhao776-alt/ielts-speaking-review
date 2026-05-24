@@ -19,8 +19,7 @@ export default function LoginPage() {
     }
     const user = login(phone.trim(), password)
     if (!user) {
-      const exists = useAuthStore.getState().users.some((u) => u.phone === phone.trim())
-      setError(exists ? '密码错误，请重试' : '该号码未绑定账号，请联系老师购买或点击下方免费体验')
+      setError('密码错误，请重试')
       return
     }
     navigate(user.role === 'teacher' ? '/' : '/student')
@@ -32,7 +31,7 @@ export default function LoginPage() {
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-bold tracking-tight">雅思口语复习</h1>
           <p className="mt-2 text-sm text-[--color-text-secondary]">
-            已购用户输入老师提供的账号密码登录
+            输入手机号登录，首次登录自动注册
           </p>
         </div>
 
@@ -72,7 +71,7 @@ export default function LoginPage() {
             type="submit"
             className="w-full rounded-full bg-gray-900 py-3.5 text-base font-medium text-white transition-opacity hover:opacity-90"
           >
-            登录
+            登录 / 注册
           </button>
         </form>
 
@@ -92,12 +91,12 @@ export default function LoginPage() {
             免费体验 · 无需注册
           </button>
           <p className="mt-3 text-center text-xs text-[--color-text-secondary]">
-            立即试用口语题库 · 语音练习 · 翻转卡片
+            一键试用 · 无需输入手机号
           </p>
         </div>
 
         <p className="mt-6 text-center text-xs text-[--color-text-secondary]">
-          觉得好用？闲鱼搜索"雅思口语翻转卡片"购买正式账号
+          注册即享体验内容 · 购买后老师为你升级为完整版
         </p>
       </div>
     </div>

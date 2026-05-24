@@ -21,7 +21,7 @@ export default function Layout() {
           <div className="flex items-center gap-3">
             <span className="text-sm font-medium">{currentUser.name}</span>
             <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-[--color-text-secondary]">
-              {currentUser.role === 'teacher' ? '老师' : currentUser.role === 'demo' ? '体验' : '学生'}
+              {currentUser.role === 'teacher' ? '老师' : currentUser.role === 'visitor' ? '体验' : '学生'}
             </span>
           </div>
           <div className="flex items-center gap-3">

@@ -12,7 +12,7 @@ const DEMO_LIMITS: Record<Tab, number> = { Part1: 3, Part2: 3, Part3: 2 }
 
 export default function QuestionBank() {
   const navigate = useNavigate()
-  const isDemo = useAuthStore((s) => s.currentUser?.role === 'demo')
+  const isVisitor = useAuthStore((s) => s.currentUser?.role === 'visitor')
   const [tab, setTab] = useState<Tab>('Part1')
   const [expandedTopic, setExpandedTopic] = useState<Record<Tab, string | null>>({ Part1: null, Part2: null, Part3: null })
   const setExpanded = (tab: Tab, topic: string | null) => {
@@ -94,9 +94,9 @@ export default function QuestionBank() {
   const part3Total = part3Topics.reduce((c, t) => c + t.questions.length, 0)
 
   // Limit topics for demo users
-  const displayPart1 = isDemo ? filteredPart1.slice(0, DEMO_LIMITS.Part1) : filteredPart1
-  const displayPart2 = isDemo ? filteredPart2.slice(0, DEMO_LIMITS.Part2) : filteredPart2
-  const displayPart3 = isDemo ? filteredPart3.slice(0, DEMO_LIMITS.Part3) : filteredPart3
+  const displayPart1 = isVisitor ? filteredPart1.slice(0, DEMO_LIMITS.Part1) : filteredPart1
+  const displayPart2 = isVisitor ? filteredPart2.slice(0, DEMO_LIMITS.Part2) : filteredPart2
+  const displayPart3 = isVisitor ? filteredPart3.slice(0, DEMO_LIMITS.Part3) : filteredPart3
 
   return (
     <div>

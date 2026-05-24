@@ -16,7 +16,7 @@ export default function StudentHome() {
 
   // Auto-import demo data for demo users
   useEffect(() => {
-    if (currentUser?.role !== 'demo') return
+    if (currentUser?.role !== 'visitor') return
     const store = useDeckStore.getState()
     const tplStore = useTemplateStore.getState()
     if (store.decks.length > 0 || tplStore.templates.length > 0) return

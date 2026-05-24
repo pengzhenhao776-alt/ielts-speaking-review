@@ -5,7 +5,7 @@ export interface User {
   phone: string
   password: string
   name: string
-  role: 'teacher' | 'student' | 'demo'
+  role: 'teacher' | 'student' | 'visitor'
 }
 
 interface AuthState {
@@ -58,20 +58,22 @@ export const useAuthStore = create<AuthState>()(
           set({ currentUser: existing })
           return existing
         }
-        return null
+        // Auto-register unknown users as visitors (limited access)
+        const visitor: User = { phone, password, name: phone, role: 'visitor' }
+        set((s) => ({ users: [...s.users, visitor], currentUser: visitor }))
+        return visitor
       },
 
       loginAsDemo() {
         set({
-          currentUser: { phone: '', password: '', name: '体验用户', role: 'demo' },
+          currentUser: { phone: '', password: '', name: '体验用户', role: 'visitor' },
         })
       },
 
       logout() {
         const user = get().currentUser
         set({ currentUser: null })
-        // 体验用户退出时清除数据
-        if (user?.role === 'demo') {
+        if (user?.role === 'visitor') {
           try {
             localStorage.removeItem('ielts_decks')
             localStorage.removeItem('ielts_templates')
@@ -81,6 +83,12 @@ export const useAuthStore = create<AuthState>()(
 
       addStudent(phone, name, password) {
         const existing = get().users.find((u) => u.phone === phone)
+        // If visitor already registered, upgrade to student
+        if (existing && existing.role === 'visitor') {
+          const updated = { ...existing, name, password, role: 'student' as const }
+          set((s) => ({ users: s.users.map((u) => (u.phone === phone ? updated : u)) }))
+          return updated
+        }
         if (existing) throw new Error('该手机号已存在')
         const user: User = { phone, name, password, role: 'student' }
         set((s) => ({ users: [...s.users, user] }))

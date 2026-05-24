@@ -22,7 +22,7 @@ function RequireTeacher({ children }: { children: React.ReactNode }) {
 function RequireStudent({ children }: { children: React.ReactNode }) {
   const user = useAuthStore((s) => s.currentUser)
   if (!user) return <Navigate to="/login" replace />
-  if (user.role !== 'student' && user.role !== 'demo') return <Navigate to="/" replace />
+  if (user.role !== 'student' && user.role !== 'visitor') return <Navigate to="/" replace />
   return <>{children}</>
 }
 
