@@ -331,7 +331,7 @@ function TopicCard({ topic, tag, expanded, onToggle, revealedAnswers, onToggleAn
                     {revealed ? '隐藏答案' : '显示答案'}
                   </button>
                   <button
-                    onClick={() => onPractice(qa.a.slice(0, 30))}
+                    onClick={() => onPractice(qa.q)}
                     className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-600 transition-colors hover:bg-blue-100"
                   >
                     练习
@@ -474,7 +474,7 @@ function Part3Card({ topic, expanded, onToggle, revealedAnswers, onToggleAnswer,
                     {revealed ? '隐藏答案' : '显示答案'}
                   </button>
                   <button
-                    onClick={() => onPractice(qa.a.slice(0, 30))}
+                    onClick={() => onPractice(qa.q)}
                     className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-600 transition-colors hover:bg-blue-100"
                   >
                     练习

@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 import { useDeckStore } from '../store/deckStore'
 import { useTemplateStore } from '../store/templateStore'
+import ConfirmModal from '../components/ConfirmModal'
 
 export default function StudentHome() {
   const navigate = useNavigate()
@@ -9,6 +11,12 @@ export default function StudentHome() {
   const logout = useAuthStore((s) => s.logout)
   const decks = useDeckStore((s) => s.decks)
   const templates = useTemplateStore((s) => s.templates)
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
+
+  const handleLogout = () => {
+    logout()
+    navigate('/login')
+  }
 
   return (
     <div>
@@ -25,7 +33,7 @@ export default function StudentHome() {
             口语题库
           </button>
           <button
-            onClick={() => { logout(); navigate('/login') }}
+            onClick={() => setShowLogoutConfirm(true)}
             className="rounded-full bg-gray-100 px-4 py-2 text-sm font-medium text-[--color-text-secondary] transition-colors hover:bg-gray-200"
           >
             退出登录
@@ -128,6 +136,16 @@ export default function StudentHome() {
             )}
           </section>
         </>
+      )}
+
+      {showLogoutConfirm && (
+        <ConfirmModal
+          title="确认退出"
+          message="退出后需要重新登录，确定要退出吗？"
+          confirmLabel="退出"
+          onConfirm={handleLogout}
+          onCancel={() => setShowLogoutConfirm(false)}
+        />
       )}
     </div>
   )

@@ -1,10 +1,18 @@
+import { useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
+import ConfirmModal from './ConfirmModal'
 
 export default function Layout() {
   const navigate = useNavigate()
   const currentUser = useAuthStore((s) => s.currentUser)
   const logout = useAuthStore((s) => s.logout)
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
+
+  const handleLogout = () => {
+    logout()
+    navigate('/login')
+  }
 
   return (
     <div className="mx-auto max-w-3xl px-5 py-6">
@@ -26,7 +34,7 @@ export default function Layout() {
               </button>
             )}
             <button
-              onClick={() => { logout(); navigate('/login') }}
+              onClick={() => setShowLogoutConfirm(true)}
               className="text-sm text-[--color-text-secondary] transition-colors hover:text-[--color-text-primary]"
             >
               退出
@@ -35,6 +43,16 @@ export default function Layout() {
         </div>
       )}
       <Outlet />
+
+      {showLogoutConfirm && (
+        <ConfirmModal
+          title="确认退出"
+          message="退出后需要重新登录，确定要退出吗？"
+          confirmLabel="退出"
+          onConfirm={handleLogout}
+          onCancel={() => setShowLogoutConfirm(false)}
+        />
+      )}
     </div>
   )
 }
