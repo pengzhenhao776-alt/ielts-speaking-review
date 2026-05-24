@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 import { useDeckStore } from '../store/deckStore'
 import { useTemplateStore } from '../store/templateStore'
 import ConfirmModal from '../components/ConfirmModal'
+import { seedDecks, seedTemplates } from '../data/seed'
 
 export default function StudentHome() {
   const navigate = useNavigate()
@@ -12,6 +13,34 @@ export default function StudentHome() {
   const decks = useDeckStore((s) => s.decks)
   const templates = useTemplateStore((s) => s.templates)
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
+
+  // Auto-import demo data for demo users
+  useEffect(() => {
+    if (currentUser?.role !== 'demo') return
+    const store = useDeckStore.getState()
+    const tplStore = useTemplateStore.getState()
+    if (store.decks.length > 0 || tplStore.templates.length > 0) return
+
+    // Import first deck with first 5 cards
+    const seed = seedDecks[0]
+    const deck = store.createDeck(seed.title, seed.description)
+    for (let i = 0; i < Math.min(5, seed.cards.length); i++) {
+      const c = seed.cards[i]
+      store.addCard(deck.id, { front: c.front, back: c.back })
+    }
+
+    // Import first template with first 2 sections (6 points each)
+    const tSeed = seedTemplates[0]
+    const tpl = tplStore.createTemplate(tSeed.topic)
+    const sections = tplStore.getTemplate(tpl.id)!.sections
+    for (let i = 0; i < Math.min(2, tSeed.sections.length, sections.length); i++) {
+      tplStore.setSectionTitle(tpl.id, sections[i].id, tSeed.sections[i].title)
+      const pts = tSeed.sections[i].points.slice(0, 6)
+      for (const point of pts) {
+        tplStore.addPoint(tpl.id, sections[i].id, point)
+      }
+    }
+  }, [currentUser?.role])
 
   const handleLogout = () => {
     logout()
@@ -135,6 +164,32 @@ export default function StudentHome() {
               </div>
             )}
           </section>
+
+          {currentUser?.role === 'demo' && (
+            <div id="upgrade-section" className="rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 p-6 shadow-sm">
+              <div className="text-center">
+                <p className="text-lg font-bold text-gray-900">还想继续练吗？</p>
+                <p className="mt-2 text-sm text-[--color-text-secondary] leading-relaxed">
+                  以上仅为体验内容。购买正式版解锁<br />
+                  <strong>8 套表达卡片</strong> · <strong>4 套思路模板</strong> · <strong>68道完整题库答案</strong><br />
+                  <strong>语音计时练习</strong> · <strong>翻转卡片朗读</strong>
+                </p>
+                <div className="mt-4 text-2xl font-extrabold text-red-500">
+                  ¥39.9<span className="text-sm font-normal text-gray-400 line-through ml-2">¥79.9</span>
+                </div>
+                <p className="mt-1 text-xs text-gray-400">一个考季 · 5-8月题库持续更新</p>
+                <button
+                  onClick={() => {
+                    alert('请在闲鱼搜索"雅思口语翻转卡片"联系老师购买，拍下秒发激活码。')
+                  }}
+                  className="mt-4 w-full rounded-full bg-gray-900 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                >
+                  立即购买 · ¥39.9
+                </button>
+                <p className="mt-2 text-xs text-gray-400">或闲鱼搜索"雅思口语翻转卡片"</p>
+              </div>
+            </div>
+          )}
         </>
       )}
 

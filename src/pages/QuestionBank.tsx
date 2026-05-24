@@ -4,16 +4,24 @@ import { part1Topics, part2Topics, part3Topics } from '../data/questionBank'
 import type { Part1Topic, Part2Topic, Part3Topic } from '../data/questionBank'
 import SpeechPractice from '../components/Card/SpeechPractice'
 import { usePracticeStore } from '../store/practiceStore'
+import { useAuthStore } from '../store/authStore'
 
 type Tab = 'Part1' | 'Part2' | 'Part3'
 
+const DEMO_LIMITS: Record<Tab, number> = { Part1: 3, Part2: 3, Part3: 2 }
+
 export default function QuestionBank() {
   const navigate = useNavigate()
+  const isDemo = useAuthStore((s) => s.currentUser?.role === 'demo')
   const [tab, setTab] = useState<Tab>('Part1')
-  const [expandedTopic, setExpandedTopic] = useState<string | null>(null)
+  const [expandedTopic, setExpandedTopic] = useState<Record<Tab, string | null>>({ Part1: null, Part2: null, Part3: null })
+  const setExpanded = (tab: Tab, topic: string | null) => {
+    setExpandedTopic((prev) => ({ ...prev, [tab]: prev[tab] === topic ? null : topic }))
+  }
   const [revealedAnswers, setRevealedAnswers] = useState<Set<string>>(new Set())
-  const [practicing, setPracticing] = useState<{ expression: string; alternatives: string } | null>(null)
+  const [practicing, setPracticing] = useState<{ expression: string; alternatives: string; referenceAnswer?: string } | null>(null)
   const [search, setSearch] = useState('')
+  const [tagFilter, setTagFilter] = useState<string>('全部')
   const practiceStore = usePracticeStore()
 
   const toggleAnswer = (key: string) => {
@@ -25,42 +33,17 @@ export default function QuestionBank() {
     })
   }
 
-  const handlePractice = (expression: string) => {
-    // Find matching card alternatives from the answer context
-    const altMap: Record<string, string> = {
-      'like': 'be fond of / be into / be a big fan of / be keen on',
-      'think': 'Personally speaking / From my perspective / In my view / As for me',
-      'important': 'meaningful / essential / vital / significant',
-      'relax': 'wind down / unwind / chill out / take it easy',
-      'help': 'benefit / do good to / be helpful for',
-      'happy': 'content / fulfilled / cheerful / delighted',
-      'interesting': 'fascinating / engaging / thought-provoking / captivating',
-      'beautiful': 'stunning / scenic / vibrant / breathtaking',
-      'good': 'rewarding / beneficial / appealing / fulfilling',
-      'many': 'numerous / plenty of / a wide range of / countless',
-      'want': 'feel like / hope to pursue / plan to',
-      'hard': 'demanding / challenging / tricky',
-      'busy': 'occupied / hectic / fully scheduled / tied up',
-    }
-
-    const lower = expression.toLowerCase()
-    let alternatives = ''
-    for (const [key, val] of Object.entries(altMap)) {
-      if (lower.includes(key)) {
-        alternatives = val
-        break
-      }
-    }
-    if (!alternatives) alternatives = 'Personally speaking / From my perspective / In my view'
-
-    setPracticing({ expression, alternatives })
+  const handlePractice = (expression: string, referenceAnswer?: string) => {
+    setPracticing({ expression, alternatives: '', referenceAnswer })
   }
 
   const lowerSearch = search.toLowerCase().trim()
 
   const filteredPart1 = useMemo(() => {
-    if (!lowerSearch) return part1Topics
-    return part1Topics
+    let list = part1Topics
+    if (tagFilter !== '全部') list = list.filter((t) => t.tag === tagFilter)
+    if (!lowerSearch) return list
+    return list
       .map((topic) => {
         if (topic.topic.toLowerCase().includes(lowerSearch)) return topic
         const matched = topic.questions.filter(
@@ -69,21 +52,24 @@ export default function QuestionBank() {
         return matched.length > 0 ? { ...topic, questions: matched } : null
       })
       .filter(Boolean) as Part1Topic[]
-  }, [lowerSearch])
+  }, [lowerSearch, tagFilter])
 
   const filteredPart2 = useMemo(() => {
-    if (!lowerSearch) return part2Topics
-    return part2Topics.filter(
+    let list = part2Topics
+    if (tagFilter !== '全部') list = list.filter((t) => t.tag === tagFilter)
+    if (!lowerSearch) return list
+    return list.filter(
       (t) =>
         t.topic.toLowerCase().includes(lowerSearch) ||
         t.cueCard.toLowerCase().includes(lowerSearch) ||
         t.answer.toLowerCase().includes(lowerSearch),
     )
-  }, [lowerSearch])
+  }, [lowerSearch, tagFilter])
 
   const filteredPart3 = useMemo(() => {
-    if (!lowerSearch) return part3Topics
-    return part3Topics
+    let list = part3Topics
+    if (!lowerSearch) return list
+    return list
       .map((topic) => {
         if (topic.topic.toLowerCase().includes(lowerSearch) || topic.relatedTo.toLowerCase().includes(lowerSearch))
           return topic
@@ -106,6 +92,11 @@ export default function QuestionBank() {
     0,
   )
   const part3Total = part3Topics.reduce((c, t) => c + t.questions.length, 0)
+
+  // Limit topics for demo users
+  const displayPart1 = isDemo ? filteredPart1.slice(0, DEMO_LIMITS.Part1) : filteredPart1
+  const displayPart2 = isDemo ? filteredPart2.slice(0, DEMO_LIMITS.Part2) : filteredPart2
+  const displayPart3 = isDemo ? filteredPart3.slice(0, DEMO_LIMITS.Part3) : filteredPart3
 
   return (
     <div>
@@ -155,16 +146,28 @@ export default function QuestionBank() {
             </button>
           )}
         </div>
-        <div className="mt-2 flex gap-3 text-xs text-[--color-text-secondary]">
-          {tab === 'Part1' && (
-            <span>已练习 {part1PracticedCount}/{part1Total} 题</span>
-          )}
-          {tab === 'Part2' && (
-            <span>已练习 {part2Practiced}/{part2Topics.length} 题</span>
-          )}
-          {tab === 'Part3' && (
-            <span>已练习 {part3PracticedCount}/{part3Total} 题</span>
-          )}
+        <div className="mt-2 flex items-center gap-2">
+          {['全部', '新题', '必考'].map((tag) => (
+            <button
+              key={tag}
+              onClick={() => setTagFilter(tag)}
+              className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+                tagFilter === tag
+                  ? 'bg-gray-900 text-white'
+                  : 'bg-gray-100 text-[--color-text-secondary] hover:bg-gray-200'
+              }`}
+            >
+              {tag}
+            </button>
+          ))}
+          <span className="ml-auto text-xs text-[--color-text-secondary]">
+            {tab === 'Part1'
+              ? `已练习 ${part1PracticedCount}/${part1Total} 题`
+              : tab === 'Part2'
+                ? `已练习 ${part2Practiced}/${part2Topics.length} 题`
+                : `已练习 ${part3PracticedCount}/${part3Total} 题`
+            }
+          </span>
         </div>
       </div>
 
@@ -173,7 +176,7 @@ export default function QuestionBank() {
         {(['Part1', 'Part2', 'Part3'] as Tab[]).map((t) => (
           <button
             key={t}
-            onClick={() => { setTab(t); setExpandedTopic(null) }}
+            onClick={() => setTab(t)}
             className={`flex-1 rounded-full py-2.5 text-sm font-medium transition-all ${
               tab === t
                 ? 'bg-white text-[--color-text-primary] shadow-sm'
@@ -193,13 +196,13 @@ export default function QuestionBank() {
               <p className="text-sm text-[--color-text-secondary]">没有匹配的题目</p>
             </div>
           ) : (
-            filteredPart1.map((topic) => (
+            displayPart1.map((topic) => (
             <TopicCard
               key={topic.topic}
               topic={topic}
               tag={topic.tag}
-              expanded={expandedTopic === topic.topic}
-              onToggle={() => setExpandedTopic(expandedTopic === topic.topic ? null : topic.topic)}
+              expanded={expandedTopic[tab] === topic.topic}
+              onToggle={() => setExpanded(tab, topic.topic)}
               revealedAnswers={revealedAnswers}
               onToggleAnswer={toggleAnswer}
               onPractice={handlePractice}
@@ -219,13 +222,13 @@ export default function QuestionBank() {
               <p className="text-sm text-[--color-text-secondary]">没有匹配的题目</p>
             </div>
           ) : (
-            filteredPart2.map((topic) => (
+            displayPart2.map((topic) => (
             <Part2Card
               key={topic.topic}
               topic={topic}
               tag={topic.tag}
-              expanded={expandedTopic === topic.topic}
-              onToggle={() => setExpandedTopic(expandedTopic === topic.topic ? null : topic.topic)}
+              expanded={expandedTopic[tab] === topic.topic}
+              onToggle={() => setExpanded(tab, topic.topic)}
               revealed={revealedAnswers.has(topic.topic)}
               onToggleAnswer={() => toggleAnswer(topic.topic)}
               onPractice={handlePractice}
@@ -245,12 +248,12 @@ export default function QuestionBank() {
               <p className="text-sm text-[--color-text-secondary]">没有匹配的题目</p>
             </div>
           ) : (
-            filteredPart3.map((topic) => (
+            displayPart3.map((topic) => (
             <Part3Card
               key={topic.topic}
               topic={topic}
-              expanded={expandedTopic === topic.topic}
-              onToggle={() => setExpandedTopic(expandedTopic === topic.topic ? null : topic.topic)}
+              expanded={expandedTopic[tab] === topic.topic}
+              onToggle={() => setExpanded(tab, topic.topic)}
               revealedAnswers={revealedAnswers}
               onToggleAnswer={toggleAnswer}
               onPractice={handlePractice}
@@ -269,6 +272,7 @@ export default function QuestionBank() {
           alternatives=""
           simple
           duration={tab === 'Part1' ? 30 : tab === 'Part2' ? 90 : 50}
+          referenceAnswer={practicing.referenceAnswer}
           onClose={() => setPracticing(null)}
         />
       )}
@@ -284,7 +288,7 @@ function TopicCard({ topic, tag, expanded, onToggle, revealedAnswers, onToggleAn
   onToggle: () => void
   revealedAnswers: Set<string>
   onToggleAnswer: (key: string) => void
-  onPractice: (expr: string) => void
+  onPractice: (expr: string, refAnswer?: string) => void
   practiced: Record<string, boolean>
   onTogglePracticed: (key: string) => void
 }) {
@@ -331,7 +335,7 @@ function TopicCard({ topic, tag, expanded, onToggle, revealedAnswers, onToggleAn
                     {revealed ? '隐藏答案' : '显示答案'}
                   </button>
                   <button
-                    onClick={() => onPractice(qa.q)}
+                    onClick={() => onPractice(qa.q, qa.a)}
                     className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-600 transition-colors hover:bg-blue-100"
                   >
                     练习
@@ -364,7 +368,7 @@ function Part2Card({ topic, tag, expanded, onToggle, revealed, onToggleAnswer, o
   onToggle: () => void
   revealed: boolean
   onToggleAnswer: () => void
-  onPractice: (expr: string) => void
+  onPractice: (expr: string, refAnswer?: string) => void
   practiced: Record<string, boolean>
   onTogglePracticed: (key: string) => void
 }) {
@@ -401,7 +405,7 @@ function Part2Card({ topic, tag, expanded, onToggle, revealed, onToggleAnswer, o
               {revealed ? '隐藏答案' : '显示答案'}
             </button>
             <button
-              onClick={() => onPractice(topic.topic)}
+              onClick={() => onPractice(topic.topic, topic.answer)}
               className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-600 transition-colors hover:bg-blue-100"
             >
               练习
@@ -430,7 +434,7 @@ function Part3Card({ topic, expanded, onToggle, revealedAnswers, onToggleAnswer,
   onToggle: () => void
   revealedAnswers: Set<string>
   onToggleAnswer: (key: string) => void
-  onPractice: (expr: string) => void
+  onPractice: (expr: string, refAnswer?: string) => void
   practiced: Record<string, boolean>
   onTogglePracticed: (key: string) => void
 }) {
@@ -474,7 +478,7 @@ function Part3Card({ topic, expanded, onToggle, revealedAnswers, onToggleAnswer,
                     {revealed ? '隐藏答案' : '显示答案'}
                   </button>
                   <button
-                    onClick={() => onPractice(qa.q)}
+                    onClick={() => onPractice(qa.q, qa.a)}
                     className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-600 transition-colors hover:bg-blue-100"
                   >
                     练习

@@ -5,7 +5,7 @@ export interface User {
   phone: string
   password: string
   name: string
-  role: 'teacher' | 'student'
+  role: 'teacher' | 'student' | 'demo'
 }
 
 interface AuthState {
@@ -13,6 +13,7 @@ interface AuthState {
   currentUser: User | null
 
   login: (phone: string, password: string) => User | null
+  loginAsDemo: () => void
   logout: () => void
   addStudent: (phone: string, name: string, password: string) => User
   removeStudent: (phone: string) => void
@@ -60,8 +61,22 @@ export const useAuthStore = create<AuthState>()(
         return null
       },
 
+      loginAsDemo() {
+        set({
+          currentUser: { phone: '', password: '', name: '体验用户', role: 'demo' },
+        })
+      },
+
       logout() {
+        const user = get().currentUser
         set({ currentUser: null })
+        // 体验用户退出时清除数据
+        if (user?.role === 'demo') {
+          try {
+            localStorage.removeItem('ielts_decks')
+            localStorage.removeItem('ielts_templates')
+          } catch {}
+        }
       },
 
       addStudent(phone, name, password) {

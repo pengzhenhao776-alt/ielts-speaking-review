@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>雅思口语复习 - 商品海报</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { display: flex; justify-content: center; background: #e5e7eb; padding: 20px; }
+  .poster {
+    width: 750px; height: 1334px;
+    background: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+  .hero {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+    color: white;
+    padding: 80px 60px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    right: -60px; top: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    right: 40px; bottom: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+  }
+  .hero h1 { font-size: 72px; font-weight: 800; line-height: 1.15; margin-bottom: 16px; letter-spacing: -1px; }
+  .hero .subtitle { font-size: 28px; opacity: 0.85; font-weight: 400; }
+  .hero .date {
+    display: inline-block;
+    margin-top: 20px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 8px 20px;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .features {
+    padding: 55px 60px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 24px;
+  }
+  .feat {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .feat-icon {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+  .feat-icon.blue { background: #eff6ff; }
+  .feat-icon.green { background: #ecfdf5; }
+  .feat-icon.amber { background: #fffbeb; }
+  .feat-icon.red { background: #fef2f2; }
+  .feat h3 { font-size: 26px; font-weight: 700; color: #111827; margin-bottom: 4px; }
+  .feat p { font-size: 19px; color: #6b7280; line-height: 1.5; }
+
+  .divider { margin: 45px 60px; height: 2px; background: #f3f4f6; border-radius: 1px; }
+
+  .bottom { padding: 0 60px 50px; }
+  .bottom h2 { font-size: 30px; font-weight: 700; color: #111827; margin-bottom: 24px; }
+  .selling-points { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 32px; }
+  .sp {
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #374151;
+    white-space: nowrap;
+  }
+  .price-box {
+    background: linear-gradient(135deg, #fef2f2 0%, #fff7ed 100%);
+    border-radius: 20px;
+    padding: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .price-left .original { font-size: 24px; color: #9ca3af; text-decoration: line-through; }
+  .price-left .current { font-size: 64px; font-weight: 800; color: #dc2626; line-height: 1; margin-top: 6px; }
+  .price-left .current span { font-size: 28px; font-weight: 500; }
+  .price-right { text-align: right; }
+  .price-right .qrcode { width: 100px; height: 100px; background: #e5e7eb; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #9ca3af; margin-bottom: 8px; margin-left: auto; }
+  .price-right p { font-size: 18px; color: #6b7280; }
+
+  .footer-bar {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: #111827;
+    color: #9ca3af;
+    text-align: center;
+    padding: 22px;
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
+  .footer-bar b { color: white; }
+</style>
+</head>
+<body>
+<div class="poster">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-badge">IELTS SPEAKING</div>
+    <h1>雅思口语<br>5 → 6.5</h1>
+    <p class="subtitle">2026年5-8月新题 · 全套题库+答案</p>
+    <span class="date">2026 MAY — AUG</span>
+  </div>
+
+  <!-- Features -->
+  <div class="features">
+    <div class="feat">
+      <div class="feat-icon blue">📚</div>
+      <div><h3>口语题库</h3><p>Part1/2/3全覆盖<br>每题带范文答案</p></div>
+    </div>
+    <div class="feat">
+      <div class="feat-icon green">🎤</div>
+      <div><h3>语音计时</h3><p>录音→转写→对比答案<br>30s/90s/50s倒计时</p></div>
+    </div>
+    <div class="feat">
+      <div class="feat-icon amber">🃏</div>
+      <div><h3>翻转卡片</h3><p>8套词句升级卡片<br>正面表达·背面例句</p></div>
+    </div>
+    <div class="feat">
+      <div class="feat-icon red">🧩</div>
+      <div><h3>思路模板</h3><p>4套话题框架<br>开头→主体→结尾</p></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Bottom -->
+  <div class="bottom">
+    <h2>为什么选它？</h2>
+    <div class="selling-points">
+      <span class="sp">📱 不用下APP</span>
+      <span class="sp">⚡ 拍下秒激活</span>
+      <span class="sp">🔄 题库免费更新</span>
+      <span class="sp">🎯 每题有答案</span>
+      <span class="sp">🗣 语音识别练习</span>
+      <span class="sp">👨‍🏫 老师自制</span>
+    </div>
+
+    <div class="price-box">
+      <div class="price-left">
+        <div class="original">¥79.9</div>
+        <div class="current"><span>¥</span>39.9</div>
+      </div>
+      <div class="price-right">
+        <div class="qrcode">📷<br>扫码</div>
+        <p>闲鱼搜<br><b style="color:#111827;">雅思口语翻转卡片</b></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    浏览器打开即用 · 无需下载 · <b>拍下秒发激活码</b>
+  </div>
+
+</div>
+</body>
+</html>

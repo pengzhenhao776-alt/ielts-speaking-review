@@ -4,7 +4,8 @@ interface Props {
   expression: string
   alternatives: string
   duration?: number
-  simple?: boolean // true = countdown only, no expression matching
+  simple?: boolean
+  referenceAnswer?: string // 练习结束后展示的参考文本
   onClose: () => void
 }
 
@@ -21,7 +22,7 @@ function supportsSpeech(): boolean {
   return !!((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition)
 }
 
-export default function SpeechPractice({ expression, alternatives, duration = 30, simple = false, onClose }: Props) {
+export default function SpeechPractice({ expression, alternatives, duration = 30, simple = false, referenceAnswer, onClose }: Props) {
   const [listening, setListening] = useState(false)
   const [countdown, setCountdown] = useState(duration)
   const [timerActive, setTimerActive] = useState(false)
@@ -109,27 +110,32 @@ export default function SpeechPractice({ expression, alternatives, duration = 30
     recognition.lang = 'en-US'
     recognition.interimResults = false
     recognition.maxAlternatives = 1
-    // Auto-stop after 8 seconds to prevent hanging mic
-    recognition.continuous = false
+    recognition.continuous = true
 
     recognition.onresult = (event: any) => {
-      const transcript = event.results[0][0].transcript
-      setText(transcript)
-      checkMatches(transcript)
-      setListening(false)
+      const transcript = event.results[event.results.length - 1][0].transcript
+      setText((prev) => {
+        const full = prev ? prev + ' ' + transcript : transcript
+        if (!simple) checkMatches(full)
+        return full
+      })
     }
 
     recognition.onerror = (event: any) => {
       if (event.error === 'no-speech') {
         setError('未检测到语音，请再试一次')
-      } else {
+      } else if (event.error !== 'aborted') {
         setError('录音出错了，请重试')
       }
-      setListening(false)
     }
 
     recognition.onend = () => {
-      setListening(false)
+      // If timer still active and listening, restart recognition
+      if (timerRef.current) {
+        try { recognitionRef.current?.start() } catch {}
+      } else {
+        setListening(false)
+      }
     }
 
     recognitionRef.current = recognition
@@ -159,6 +165,26 @@ export default function SpeechPractice({ expression, alternatives, duration = 30
         return prev - 1
       })
     }, 1000)
+  }
+
+  const addTime = () => {
+    setCountdown((prev) => {
+      const next = prev + 10
+      // If timer was stopped (hit 0), restart it
+      if (!timerRef.current) {
+        timerRef.current = setInterval(() => {
+          setCountdown((prev2: number) => {
+            if (prev2 <= 1) {
+              stopMic()
+              return 0
+            }
+            return prev2 - 1
+          })
+        }, 1000)
+        setTimerActive(true)
+      }
+      return next
+    })
   }
 
   const stopMic = () => {
@@ -308,9 +334,19 @@ export default function SpeechPractice({ expression, alternatives, duration = 30
               麦克风已启用
             </span>
           )}
-          <p className="text-xs text-[--color-text-secondary]">
-            限时回答：{duration}秒
-          </p>
+          <div className="flex items-center gap-3">
+            <p className="text-xs text-[--color-text-secondary]">
+              限时回答：{duration}秒
+            </p>
+            {(timerActive || countdown === 0) && (
+              <button
+                onClick={addTime}
+                className="rounded-full bg-gray-100 px-3 py-0.5 text-xs font-medium text-[--color-text-secondary] transition-colors hover:bg-gray-200"
+              >
+                +10秒
+              </button>
+            )}
+          </div>
         </div>
 
         {error && (
@@ -324,6 +360,14 @@ export default function SpeechPractice({ expression, alternatives, duration = 30
           <div className="mb-4 rounded-xl bg-gray-50 p-4">
             <p className="text-xs font-medium text-[--color-text-secondary] mb-1">你的回答</p>
             <p className="text-sm italic">"{text}"</p>
+          </div>
+        )}
+
+        {/* Reference answer (simple mode, after timer ends) */}
+        {simple && referenceAnswer && !timerActive && !listening && (
+          <div className="mb-4 rounded-xl bg-emerald-50 p-4">
+            <p className="text-xs font-medium text-emerald-700 mb-1">参考答案</p>
+            <p className="text-sm text-emerald-800 leading-relaxed">{referenceAnswer}</p>
           </div>
         )}
 

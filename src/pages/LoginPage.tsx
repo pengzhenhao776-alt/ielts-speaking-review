@@ -8,6 +8,7 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const navigate = useNavigate()
   const login = useAuthStore((s) => s.login)
+  const loginAsDemo = useAuthStore((s) => s.loginAsDemo)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -74,8 +75,28 @@ export default function LoginPage() {
           </button>
         </form>
 
+        <div className="mt-6">
+          <div className="relative mb-4">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-200" />
+            </div>
+            <div className="relative flex justify-center text-xs">
+              <span className="bg-white px-3 text-gray-400">或</span>
+            </div>
+          </div>
+          <button
+            onClick={() => { loginAsDemo(); navigate('/student') }}
+            className="w-full rounded-full border-2 border-blue-200 bg-blue-50 py-3.5 text-base font-medium text-blue-600 transition-colors hover:bg-blue-100"
+          >
+            免费体验 · 无需注册
+          </button>
+          <p className="mt-3 text-center text-xs text-[--color-text-secondary]">
+            立即试用口语题库 · 语音练习 · 翻转卡片
+          </p>
+        </div>
+
         <p className="mt-6 text-center text-xs text-[--color-text-secondary]">
-          仅限老师绑定的账号登录 · 学生请联系老师获取账号
+          已购用户请登录 · 学生请联系老师获取账号
         </p>
       </div>
     </div>
