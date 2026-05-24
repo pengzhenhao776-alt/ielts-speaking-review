@@ -19,7 +19,8 @@ export default function LoginPage() {
     }
     const user = login(phone.trim(), password)
     if (!user) {
-      setError('手机号或密码错误')
+      const exists = useAuthStore.getState().users.some((u) => u.phone === phone.trim())
+      setError(exists ? '密码错误，请重试' : '该号码未绑定账号，请联系老师购买或点击下方免费体验')
       return
     }
     navigate(user.role === 'teacher' ? '/' : '/student')
@@ -31,7 +32,7 @@ export default function LoginPage() {
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-bold tracking-tight">雅思口语复习</h1>
           <p className="mt-2 text-sm text-[--color-text-secondary]">
-            首次登录自动注册，老师账号可管理课程
+            已购用户输入老师提供的账号密码登录
           </p>
         </div>
 
@@ -71,7 +72,7 @@ export default function LoginPage() {
             type="submit"
             className="w-full rounded-full bg-gray-900 py-3.5 text-base font-medium text-white transition-opacity hover:opacity-90"
           >
-            登录 / 注册
+            登录
           </button>
         </form>
 
@@ -81,7 +82,7 @@ export default function LoginPage() {
               <div className="w-full border-t border-gray-200" />
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="bg-white px-3 text-gray-400">或</span>
+              <span className="bg-white px-3 text-gray-400">还没有账号？</span>
             </div>
           </div>
           <button
@@ -96,7 +97,7 @@ export default function LoginPage() {
         </div>
 
         <p className="mt-6 text-center text-xs text-[--color-text-secondary]">
-          已购用户请登录 · 学生请联系老师获取账号
+          觉得好用？闲鱼搜索"雅思口语翻转卡片"购买正式账号
         </p>
       </div>
     </div>
