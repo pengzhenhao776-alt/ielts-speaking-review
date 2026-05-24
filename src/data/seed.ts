@@ -1,6 +1,6 @@
 import type { Deck, SpeakingTemplate } from '../types'
 
-export const seedDecks: Omit<Deck, 'id' | 'createdAt' | 'updatedAt' | 'locked'>[] = [
+export const seedDecks: Omit<Deck, 'id' | 'createdAt' | 'updatedAt'>[] = [
   {
     title: '万能动词升级',
     description: '口语基础动词 → 高级替换，避免全篇 like / think / want',
@@ -120,7 +120,7 @@ export const seedDecks: Omit<Deck, 'id' | 'createdAt' | 'updatedAt' | 'locked'>[
   },
 ]
 
-export const seedTemplates: Omit<SpeakingTemplate, 'id' | 'createdAt' | 'updatedAt' | 'locked'>[] = [
+export const seedTemplates: Omit<SpeakingTemplate, 'id' | 'createdAt' | 'updatedAt'>[] = [
   {
     topic: 'Part 1 ORED 答题框架 (3句话 · 20秒)',
     sections: [

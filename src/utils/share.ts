@@ -28,8 +28,21 @@ export function decode<T>(encoded: string): T | null {
   }
 }
 
-export function generateShareUrl(type: 'deck' | 'template', data: unknown): string {
+export function generateShareUrl(type: 'deck' | 'template' | 'all' | 'activate', data: unknown): string {
   const encoded = encode(data)
   const base = window.location.origin + window.location.pathname
   return `${base}#/share?type=${type}&d=${encoded}`
+}
+
+export async function shortenUrl(longUrl: string): Promise<string> {
+  try {
+    const resp = await fetch(
+      `https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`
+    )
+    if (resp.ok) {
+      const text = await resp.text()
+      if (text.startsWith('http')) return text
+    }
+  } catch {}
+  return longUrl
 }

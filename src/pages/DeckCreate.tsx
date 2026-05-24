@@ -23,7 +23,6 @@ export default function DeckCreate() {
   const addCard = useDeckStore((s) => s.addCard)
   const deleteCard = useDeckStore((s) => s.deleteCard)
   const deleteDeck = useDeckStore((s) => s.deleteDeck)
-  const toggleLock = useDeckStore((s) => s.toggleLock)
 
   const handleSave = () => {
     if (!title.trim()) return
@@ -87,10 +86,9 @@ export default function DeckCreate() {
       title: currentDeck.title,
       description: currentDeck.description,
       cards: currentDeck.cards,
-      locked: currentDeck.locked,
     })
     navigator.clipboard.writeText(url).then(() => {
-      alert('分享链接已复制到剪贴板！')
+      alert('✅ 分享链接已复制！')
     })
   }
 
@@ -108,18 +106,6 @@ export default function DeckCreate() {
         <h1 className="text-xl font-bold">
           {existing ? '编辑卡片组' : '新建卡片组'}
         </h1>
-        {existing && (
-          <button
-            onClick={() => toggleLock(existing.id)}
-            className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
-              existing.locked
-                ? 'bg-amber-50 text-amber-600 hover:bg-amber-100'
-                : 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100'
-            }`}
-          >
-            {existing.locked ? '🔒 已锁定' : '🔓 已解锁'}
-          </button>
-        )}
         {existing && (
           <div className="ml-auto flex gap-2">
             <button

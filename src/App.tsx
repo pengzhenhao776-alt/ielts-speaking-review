@@ -1,5 +1,4 @@
-import { useEffect } from 'react'
-import { HashRouter, Routes, Route, useNavigate } from 'react-router-dom'
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuthStore } from './store/authStore'
 import Layout from './components/Layout'
 import HomePage from './pages/HomePage'
@@ -11,30 +10,19 @@ import SharePage from './pages/SharePage'
 import LoginPage from './pages/LoginPage'
 import StudentHome from './pages/StudentHome'
 import StudentManage from './pages/StudentManage'
+import QuestionBank from './pages/QuestionBank'
 
 function RequireTeacher({ children }: { children: React.ReactNode }) {
   const user = useAuthStore((s) => s.currentUser)
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (!user) { navigate('/login', { replace: true }); return }
-    if (user.role !== 'teacher') { navigate('/student', { replace: true }) }
-  }, [user, navigate])
-
-  if (!user || user.role !== 'teacher') return null
+  if (!user) return <Navigate to="/login" replace />
+  if (user.role !== 'teacher') return <Navigate to="/student" replace />
   return <>{children}</>
 }
 
 function RequireStudent({ children }: { children: React.ReactNode }) {
   const user = useAuthStore((s) => s.currentUser)
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (!user) { navigate('/login', { replace: true }); return }
-    if (user.role !== 'student') { navigate('/', { replace: true }) }
-  }, [user, navigate])
-
-  if (!user || user.role !== 'student') return null
+  if (!user) return <Navigate to="/login" replace />
+  if (user.role !== 'student') return <Navigate to="/" replace />
   return <>{children}</>
 }
 
@@ -69,6 +57,7 @@ function App() {
           <Route path="/student" element={
             <RequireStudent><StudentHome /></RequireStudent>
           } />
+          <Route path="/question-bank" element={<QuestionBank />} />
         </Route>
       </Routes>
     </HashRouter>

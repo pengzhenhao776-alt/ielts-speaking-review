@@ -25,7 +25,6 @@ export default function TemplateCreate() {
   const addPoint = useTemplateStore((s) => s.addPoint)
   const updatePoint = useTemplateStore((s) => s.updatePoint)
   const removePoint = useTemplateStore((s) => s.removePoint)
-  const toggleLock = useTemplateStore((s) => s.toggleLock)
 
   const handleSave = () => {
     if (!topic.trim()) return
@@ -80,10 +79,9 @@ export default function TemplateCreate() {
     const url = generateShareUrl('template', {
       topic: currentTemplate.topic,
       sections: currentTemplate.sections,
-      locked: currentTemplate.locked,
     })
     navigator.clipboard.writeText(url).then(() => {
-      alert('分享链接已复制到剪贴板！')
+      alert('✅ 分享链接已复制！')
     })
   }
 
@@ -101,18 +99,6 @@ export default function TemplateCreate() {
         <h1 className="text-xl font-bold">
           {existing ? '编辑思路模板' : '新建思路模板'}
         </h1>
-        {existing && (
-          <button
-            onClick={() => toggleLock(existing.id)}
-            className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
-              existing.locked
-                ? 'bg-amber-50 text-amber-600 hover:bg-amber-100'
-                : 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100'
-            }`}
-          >
-            {existing.locked ? '🔒 已锁定' : '🔓 已解锁'}
-          </button>
-        )}
         {existing && (
           <div className="ml-auto flex gap-2">
             <button

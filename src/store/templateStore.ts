@@ -21,7 +21,6 @@ interface TemplateState {
 
   createTemplate: (topic: string) => SpeakingTemplate
   updateTemplate: (id: string, data: Partial<Pick<SpeakingTemplate, 'topic'>>) => void
-  toggleLock: (id: string) => void
   deleteTemplate: (id: string) => void
 
   setSectionTitle: (templateId: string, sectionId: string, title: string) => void
@@ -42,7 +41,6 @@ export const useTemplateStore = create<TemplateState>()(
           id: genId(),
           topic,
           sections: DEFAULT_SECTIONS.map((s) => ({ ...s, id: genId() })),
-          locked: true,
           createdAt: now(),
           updatedAt: now(),
         }
@@ -54,14 +52,6 @@ export const useTemplateStore = create<TemplateState>()(
         set((s) => ({
           templates: s.templates.map((t) =>
             t.id === id ? { ...t, ...data, updatedAt: now() } : t
-          ),
-        }))
-      },
-
-      toggleLock(id) {
-        set((s) => ({
-          templates: s.templates.map((t) =>
-            t.id === id ? { ...t, locked: !t.locked, updatedAt: now() } : t
           ),
         }))
       },
@@ -147,6 +137,6 @@ export const useTemplateStore = create<TemplateState>()(
         return get().templates.find((t) => t.id === id)
       },
     }),
-    { name: 'ielts_templates' }
+    { name: 'ielts_templates_v2' }
   )
 )

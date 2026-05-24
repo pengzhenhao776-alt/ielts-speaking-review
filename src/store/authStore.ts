@@ -17,6 +17,7 @@ interface AuthState {
   addStudent: (phone: string, name: string, password: string) => User
   removeStudent: (phone: string) => void
   getStudents: () => User[]
+  syncBindings: (students: { phone: string; name: string; password: string }[]) => void
 }
 
 const TEACHER_PHONE = '13312211090'
@@ -29,14 +30,34 @@ export const useAuthStore = create<AuthState>()(
       ],
       currentUser: null,
 
-      login(phone, password) {
-        const user = get().users.find(
-          (u) => u.phone === phone && u.password === password
-        )
-        if (user) {
-          set({ currentUser: user })
+      syncBindings(students) {
+        const current = get().users.filter((u) => u.role !== 'student')
+        const newStudents: User[] = students.map((s) => ({
+          phone: s.phone,
+          name: s.name,
+          password: s.password,
+          role: 'student' as const,
+        }))
+        const merged = [...current]
+        for (const ns of newStudents) {
+          const idx = merged.findIndex((u) => u.phone === ns.phone)
+          if (idx >= 0) {
+            merged[idx] = ns
+          } else {
+            merged.push(ns)
+          }
         }
-        return user ?? null
+        set({ users: merged })
+      },
+
+      login(phone, password) {
+        const existing = get().users.find((u) => u.phone === phone)
+        if (existing) {
+          if (existing.password !== password) return null
+          set({ currentUser: existing })
+          return existing
+        }
+        return null
       },
 
       logout() {
@@ -60,6 +81,6 @@ export const useAuthStore = create<AuthState>()(
         return get().users.filter((u) => u.role === 'student')
       },
     }),
-    { name: 'ielts_auth' }
+    { name: 'ielts_auth_v2' }
   )
 )

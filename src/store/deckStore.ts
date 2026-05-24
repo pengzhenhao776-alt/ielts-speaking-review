@@ -15,7 +15,6 @@ interface DeckState {
 
   createDeck: (title: string, description: string) => Deck
   updateDeck: (id: string, data: Partial<Pick<Deck, 'title' | 'description'>>) => void
-  toggleLock: (id: string) => void
   deleteDeck: (id: string) => void
 
   addCard: (deckId: string, card: Omit<Card, 'id'>) => void
@@ -36,7 +35,6 @@ export const useDeckStore = create<DeckState>()(
           title,
           description,
           cards: [],
-          locked: true,
           createdAt: now(),
           updatedAt: now(),
         }
@@ -48,14 +46,6 @@ export const useDeckStore = create<DeckState>()(
         set((s) => ({
           decks: s.decks.map((d) =>
             d.id === id ? { ...d, ...data, updatedAt: now() } : d
-          ),
-        }))
-      },
-
-      toggleLock(id) {
-        set((s) => ({
-          decks: s.decks.map((d) =>
-            d.id === id ? { ...d, locked: !d.locked, updatedAt: now() } : d
           ),
         }))
       },
@@ -109,6 +99,6 @@ export const useDeckStore = create<DeckState>()(
         return get().decks.find((d) => d.id === id)
       },
     }),
-    { name: 'ielts_decks' }
+    { name: 'ielts_decks_v2' }
   )
 )

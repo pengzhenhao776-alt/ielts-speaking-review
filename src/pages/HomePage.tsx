@@ -11,8 +11,8 @@ export default function HomePage() {
   const [imported, setImported] = useState(false)
 
   const handleImport = () => {
-    const { createDeck, addCard, toggleLock: lockDeck, decks: existingDecks } = useDeckStore.getState()
-    const { createTemplate, addPoint, toggleLock: lockTpl, templates: existingTpls } = useTemplateStore.getState()
+    const { createDeck, addCard, decks: existingDecks } = useDeckStore.getState()
+    const { createTemplate, addPoint, templates: existingTpls } = useTemplateStore.getState()
 
     const existingTitles = new Set(existingDecks.map((d) => d.title))
     const existingTopics = new Set(existingTpls.map((t) => t.topic))
@@ -20,7 +20,6 @@ export default function HomePage() {
     for (const seed of seedDecks) {
       if (existingTitles.has(seed.title)) continue
       const deck = createDeck(seed.title, seed.description)
-      lockDeck(deck.id) // unlock imported data
       for (const card of seed.cards) {
         addCard(deck.id, { front: card.front, back: card.back })
       }
@@ -29,7 +28,6 @@ export default function HomePage() {
     for (const seed of seedTemplates) {
       if (existingTopics.has(seed.topic)) continue
       const tpl = createTemplate(seed.topic)
-      lockTpl(tpl.id) // unlock imported data
       const tplSections = useTemplateStore.getState().getTemplate(tpl.id)!.sections
       for (let i = 0; i < seed.sections.length && i < tplSections.length; i++) {
         const store = useTemplateStore.getState()
@@ -50,14 +48,22 @@ export default function HomePage() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-3xl font-bold tracking-tight">雅思口语复习</h1>
-        {isEmpty && (
+        <div className="flex gap-2">
           <button
-            onClick={handleImport}
-            className="rounded-full bg-gray-900 px-5 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+            onClick={() => navigate('/question-bank')}
+            className="rounded-full bg-blue-50 px-5 py-2 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-100"
           >
-            导入课程数据
+            口语题库
           </button>
-        )}
+          {isEmpty && (
+            <button
+              onClick={handleImport}
+              className="rounded-full bg-gray-900 px-5 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+            >
+              导入课程数据
+            </button>
+          )}
+        </div>
         {imported && (
           <span className="text-sm text-emerald-600">已导入全部课程数据</span>
         )}
@@ -90,16 +96,14 @@ export default function HomePage() {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
-                    <h3 className="font-semibold">
-                      {deck.locked ? '🔒 ' : ''}{deck.title}
-                    </h3>
+                    <h3 className="font-semibold">{deck.title}</h3>
                     {deck.description && (
                       <p className="mt-0.5 text-sm text-[--color-text-secondary]">
                         {deck.description}
                       </p>
                     )}
                     <p className="mt-1 text-xs text-[--color-text-secondary]">
-                      {deck.cards.length} 张卡片{deck.locked ? ' · 已锁定' : ''}
+                      {deck.cards.length} 张卡片
                     </p>
                   </div>
                   <div className="flex gap-2">
@@ -150,11 +154,9 @@ export default function HomePage() {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
-                    <h3 className="font-semibold">
-                      {tpl.locked ? '🔒 ' : ''}{tpl.topic}
-                    </h3>
+                    <h3 className="font-semibold">{tpl.topic}</h3>
                     <p className="mt-1 text-xs text-[--color-text-secondary]">
-                      {tpl.sections.length} 个段落{tpl.locked ? ' · 已锁定' : ''}
+                      {tpl.sections.length} 个段落
                     </p>
                   </div>
                   <div className="flex gap-2">

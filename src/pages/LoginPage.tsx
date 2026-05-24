@@ -30,7 +30,7 @@ export default function LoginPage() {
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-bold tracking-tight">雅思口语复习</h1>
           <p className="mt-2 text-sm text-[--color-text-secondary]">
-            登录以继续
+            首次登录自动注册，老师账号可管理课程
           </p>
         </div>
 
@@ -43,7 +43,7 @@ export default function LoginPage() {
               type="text"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="w-full rounded-xl border border-[--color-border] bg-gray-50 px-4 py-3.5 text-base outline-none focus:border-[--color-accent] focus:ring-1 focus:ring-[--color-accent]"
+              className="w-full rounded-xl border border-[--color-border] bg-gray-50 px-4 py-3 text-base outline-none focus:border-[--color-accent] focus:ring-1 focus:ring-[--color-accent]"
               placeholder="请输入手机号"
               autoFocus
             />
@@ -57,8 +57,8 @@ export default function LoginPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-xl border border-[--color-border] bg-gray-50 px-4 py-3.5 text-base outline-none focus:border-[--color-accent] focus:ring-1 focus:ring-[--color-accent]"
-              placeholder="请输入密码"
+              className="w-full rounded-xl border border-[--color-border] bg-gray-50 px-4 py-3 text-base outline-none focus:border-[--color-accent] focus:ring-1 focus:ring-[--color-accent]"
+              placeholder="请输入密码（至少6位）"
             />
           </div>
 
@@ -70,12 +70,12 @@ export default function LoginPage() {
             type="submit"
             className="w-full rounded-full bg-gray-900 py-3.5 text-base font-medium text-white transition-opacity hover:opacity-90"
           >
-            登录
+            登录 / 注册
           </button>
         </form>
 
         <p className="mt-6 text-center text-xs text-[--color-text-secondary]">
-          学生请使用老师提供的账号登录
+          仅限老师绑定的账号登录 · 学生请联系老师获取账号
         </p>
       </div>
     </div>

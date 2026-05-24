@@ -16,7 +16,6 @@ export interface Deck {
   title: string
   description: string
   cards: Card[]
-  locked: boolean
   createdAt: string
   updatedAt: string
 }
@@ -31,7 +30,6 @@ export interface SpeakingTemplate {
   id: string
   topic: string
   sections: TemplateSection[]
-  locked: boolean
   createdAt: string
   updatedAt: string
 }
