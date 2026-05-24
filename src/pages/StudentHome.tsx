@@ -21,12 +21,14 @@ export default function StudentHome() {
     const tplStore = useTemplateStore.getState()
     if (store.decks.length > 0 || tplStore.templates.length > 0) return
 
-    // Import first deck with first 5 cards
-    const seed = seedDecks[0]
-    const deck = store.createDeck(seed.title, seed.description)
-    for (let i = 0; i < Math.min(5, seed.cards.length); i++) {
-      const c = seed.cards[i]
-      store.addCard(deck.id, { front: c.front, back: c.back })
+    // Import first 2 decks with first 5 cards each
+    for (let d = 0; d < Math.min(2, seedDecks.length); d++) {
+      const seed = seedDecks[d]
+      const deck = store.createDeck(seed.title, seed.description)
+      for (let i = 0; i < Math.min(5, seed.cards.length); i++) {
+        const c = seed.cards[i]
+        store.addCard(deck.id, { front: c.front, back: c.back })
+      }
     }
 
     // Import first template with first 2 sections (6 points each)
@@ -170,8 +172,8 @@ export default function StudentHome() {
               <div className="text-center">
                 <p className="text-lg font-bold text-gray-900">还想继续练吗？</p>
                 <p className="mt-2 text-sm text-[--color-text-secondary] leading-relaxed">
-                  以上仅为体验内容。购买正式版解锁<br />
-                  <strong>8 套表达卡片</strong> · <strong>4 套思路模板</strong> · <strong>68道完整题库答案</strong><br />
+                  以上仅为体验内容（2组卡片+1个模板）。购买正式版解锁<br />
+                  <strong>全部 8 套表达卡片</strong> · <strong>4 套思路模板</strong> · <strong>68道完整题库答案</strong><br />
                   <strong>语音计时练习</strong> · <strong>翻转卡片朗读</strong>
                 </p>
                 <div className="mt-4 text-2xl font-extrabold text-red-500">
