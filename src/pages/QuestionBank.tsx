@@ -12,7 +12,8 @@ const DEMO_LIMITS: Record<Tab, number> = { Part1: 3, Part2: 3, Part3: 2 }
 
 export default function QuestionBank() {
   const navigate = useNavigate()
-  const isVisitor = useAuthStore((s) => s.currentUser?.role === 'visitor' || s.currentUser?.role === 'demo')
+  const user = useAuthStore((s) => s.currentUser)
+  const isVisitor = !user || user.role === 'visitor' || user.role === 'demo'
   const [tab, setTab] = useState<Tab>('Part1')
   const [expandedTopic, setExpandedTopic] = useState<Record<Tab, string | null>>({ Part1: null, Part2: null, Part3: null })
   const setExpanded = (tab: Tab, topic: string | null) => {

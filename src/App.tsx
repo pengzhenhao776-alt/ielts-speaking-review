@@ -46,24 +46,18 @@ function App() {
           <Route path="/deck/:id" element={
             <RequireTeacher><DeckCreate /></RequireTeacher>
           } />
-          <Route path="/deck/:id/review" element={
-            <RequireStudent><DeckReview /></RequireStudent>
-          } />
+          <Route path="/deck/:id/review" element={<DeckReview />} />
           <Route path="/template/new" element={
             <RequireTeacher><TemplateCreate /></RequireTeacher>
           } />
           <Route path="/template/:id" element={
             <RequireTeacher><TemplateCreate /></RequireTeacher>
           } />
-          <Route path="/template/:id/review" element={
-            <RequireStudent><TemplateReview /></RequireStudent>
-          } />
+          <Route path="/template/:id/review" element={<TemplateReview />} />
           <Route path="/student" element={
             <RequireStudent><StudentHome /></RequireStudent>
           } />
-          <Route path="/question-bank" element={
-            <RequireStudent><QuestionBank /></RequireStudent>
-          } />
+          <Route path="/question-bank" element={<QuestionBank />} />
         </Route>
       </Routes>
     </HashRouter>
