@@ -16,7 +16,7 @@ export default function StudentHome() {
 
   // Auto-import demo data for visitor users
   useEffect(() => {
-    if (currentUser?.role !== 'visitor') return
+    if ((currentUser?.role !== 'visitor' && currentUser?.role !== 'demo')) return
     const store = useDeckStore.getState()
     const tplStore = useTemplateStore.getState()
 
@@ -170,7 +170,7 @@ export default function StudentHome() {
             )}
           </section>
 
-          {currentUser?.role === 'demo' && (
+          {(currentUser?.role === 'visitor' || currentUser?.role === 'demo') && (
             <div id="upgrade-section" className="rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 p-6 shadow-sm">
               <div className="text-center">
                 <p className="text-lg font-bold text-gray-900">还想继续练吗？</p>

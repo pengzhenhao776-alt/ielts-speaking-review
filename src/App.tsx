@@ -22,7 +22,7 @@ function RequireTeacher({ children }: { children: React.ReactNode }) {
 function RequireStudent({ children }: { children: React.ReactNode }) {
   const user = useAuthStore((s) => s.currentUser)
   if (!user) return <Navigate to="/login" replace />
-  if (user.role !== 'student' && user.role !== 'visitor') return <Navigate to="/" replace />
+  if (user.role !== 'student' && user.role !== 'visitor' && user.role !== 'demo') return <Navigate to="/" replace />
   return <>{children}</>
 }
 
@@ -46,18 +46,24 @@ function App() {
           <Route path="/deck/:id" element={
             <RequireTeacher><DeckCreate /></RequireTeacher>
           } />
-          <Route path="/deck/:id/review" element={<DeckReview />} />
+          <Route path="/deck/:id/review" element={
+            <RequireStudent><DeckReview /></RequireStudent>
+          } />
           <Route path="/template/new" element={
             <RequireTeacher><TemplateCreate /></RequireTeacher>
           } />
           <Route path="/template/:id" element={
             <RequireTeacher><TemplateCreate /></RequireTeacher>
           } />
-          <Route path="/template/:id/review" element={<TemplateReview />} />
+          <Route path="/template/:id/review" element={
+            <RequireStudent><TemplateReview /></RequireStudent>
+          } />
           <Route path="/student" element={
             <RequireStudent><StudentHome /></RequireStudent>
           } />
-          <Route path="/question-bank" element={<QuestionBank />} />
+          <Route path="/question-bank" element={
+            <RequireStudent><QuestionBank /></RequireStudent>
+          } />
         </Route>
       </Routes>
     </HashRouter>

@@ -42,7 +42,7 @@ export default function Layout() {
           </div>
         </div>
       )}
-      {currentUser?.role === 'demo' && (
+      {(currentUser?.role === 'visitor' || currentUser?.role === 'demo') && (
         <div className="mb-5 flex items-center justify-between rounded-2xl bg-gradient-to-r from-blue-500 to-blue-600 px-5 py-3 text-white shadow-sm">
           <div>
             <p className="text-sm font-semibold">体验模式 · 部分内容预览</p>
