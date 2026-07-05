@@ -325,6 +325,71 @@ export const part1Topics: Part1Topic[] = [
       { q: 'How do you remember things?', a: "I rely heavily on my phone for reminders and notes. It's practical and effective — almost like an extension of my memory." },
     ],
   },
+  {
+    topic: 'Typing',
+    tag: '新题',
+    questions: [
+      { q: 'Do you prefer typing or handwriting?', a: "Personally speaking, I much prefer typing over handwriting. Typing is faster and more efficient, and I can easily edit without messy corrections. While handwriting feels more personal and helps with memory retention, for daily tasks like taking notes in class, typing wins for me." },
+      { q: 'Do you type on a keyboard every day?', a: "Yes, I type on a laptop keyboard almost every day. I'm a student, so most of my homework and reports are done on a computer. My phone also occupies a big part of my typing, sending messages to friends and scrolling through social media from my perspective." },
+      { q: 'When did you learn how to type on a keyboard?', a: "I learned to type when I was around 10 or 11 in primary school. We had a basic computer class where the teacher showed us finger placement. To be honest, I wasn't great at it back then, but as I started using computers more, my typing speed just improved naturally through daily practice." },
+      { q: 'How do you improve your typing speed?', a: "The most effective way, in my view, is simply typing more frequently. I practice through chatting with friends online and writing assignments. Some people use typing games or websites to boost their speed, which can be quite engaging. I've also found that learning to type without looking at the keyboard — touch typing — makes a huge difference." },
+    ],
+  },
+  {
+    topic: 'Perfume',
+    tag: '新题',
+    questions: [
+      { q: 'Do you like wearing perfume?', a: "Yes, I do enjoy wearing perfume occasionally. For me, a nice scent can lift my mood and make me feel more confident before going out. I usually wear something light and fresh rather than something too strong and overpowering." },
+      { q: 'Have you ever given perfume as a gift?', a: "Yes, I actually gave a bottle of perfume to my mother on her birthday. I chose a floral fragrance because I knew she preferred that type. She was genuinely delighted with the gift, which gave me a real sense of satisfaction." },
+      { q: 'Do you think perfume is expensive in your country?', a: "It depends on the brand, honestly. International luxury brands can be quite pricey, often costing hundreds of yuan. However, there are also affordable domestic brands that offer decent quality at a fraction of the price. From my perspective, you don't need to spend a fortune to smell nice." },
+    ],
+  },
+  {
+    topic: 'Mathematics',
+    tag: '新题',
+    questions: [
+      { q: 'Do you like math?', a: "To be honest, my relationship with math is a bit mixed. I appreciate its logic and clarity — when you solve a problem correctly, it gives a real sense of achievement. But I also find advanced math quite challenging and sometimes frustrating." },
+      { q: 'When did you start learning math?', a: "I started learning math at a very young age, probably in kindergarten when we learned to count. In primary school, we moved on to basic calculations like addition and subtraction. It has been a core subject all through my education." },
+      { q: 'Do you think math is important?', a: "Absolutely. Math is genuinely essential in everyday life — from calculating prices while shopping to managing personal finances. Beyond that, it trains logical thinking and problem-solving skills. Many careers, especially in science, engineering, and technology, rely heavily on mathematical thinking." },
+      { q: 'Is math difficult for you to learn?', a: "Some concepts are definitely challenging, especially when they become abstract. I've struggled with certain topics like geometry and algebra. However, I've found that with consistent practice and a good teacher who explains things clearly, even difficult math becomes understandable over time." },
+    ],
+  },
+  {
+    topic: 'Smiling',
+    tag: '新题',
+    questions: [
+      { q: 'Do you smile a lot?', a: "I would say yes, I smile quite frequently. I'm naturally a cheerful person, and smiling helps me connect with others more easily. Even on stressful days, I try to keep a positive expression because I find it actually improves my mood." },
+      { q: 'When do people smile at others?', a: "People smile for numerous reasons. The most common is as a greeting — when meeting friends or colleagues. We also smile to show appreciation, to encourage someone, or simply when we find something amusing. Smiling is a universal language, and it creates a warm atmosphere almost instantly." },
+      { q: 'Do you think people should hide their negative emotions by smiling?', a: "I don't think people should always hide their true feelings behind a smile. While being positive in social situations is polite, constantly suppressing negative emotions isn't healthy. It's important to have outlets — like talking to a close friend — where you can express how you genuinely feel without pretending." },
+    ],
+  },
+  {
+    topic: 'Websites',
+    tag: '新题',
+    questions: [
+      { q: 'What websites do you often visit?', a: "I frequently visit social media platforms and video streaming sites for entertainment. For study purposes, I use search engines and educational websites to look up information. I also spend time on shopping websites browsing for deals, though not always buying." },
+      { q: 'Do you prefer to get information from websites or books?', a: "For quick facts and current information, websites are definitely more convenient and faster. However, for deep learning and reliable academic knowledge, books are still superior in my view. The best approach is combining both — using websites for speed and books for depth." },
+      { q: 'Is there any change in the websites you visit compared to the past?', a: "Definitely. A few years ago, I mainly visited entertainment and gaming websites. Now, much more of my time is spent on educational platforms and news sites. As I've gotten older, my interests and needs have shifted toward more practical and informative content." },
+    ],
+  },
+  {
+    topic: 'Headphone',
+    tag: '新题',
+    questions: [
+      { q: 'Do you use headphones often?', a: "Yes, I use headphones almost every day. I listen to music while commuting and studying, and I use them for online classes too. They help me focus by blocking out background noise and creating a sense of personal space even in crowded places." },
+      { q: 'What type of headphones do you prefer?', a: "I prefer wireless earbuds because they're compact and convenient for daily use. They fit easily in my pocket and don't have tangled cables, which is a genuine benefit when I'm on the move. For home use, over-ear headphones offer better sound quality." },
+      { q: 'Do you think using headphones too much is harmful?', a: "Yes, there are some genuine risks. Listening at high volumes for extended periods can damage hearing over time. Also, wearing headphones constantly might make people less aware of their surroundings and reduce social interaction. Like most things, moderation is key." },
+    ],
+  },
+  {
+    topic: 'Stars & Outer Space',
+    tag: '新题',
+    questions: [
+      { q: 'Have you ever looked at the stars?', a: "Yes, I've gazed at the stars many times, especially when I'm away from city lights. The night sky is genuinely breathtaking — it gives you a sense of how vast the universe is. I remember a camping trip where the sky was so clear I could see the Milky Way." },
+      { q: 'Do you like watching science fiction movies about space?', a: "I'm a big fan of sci-fi movies about space. Films like Interstellar and The Martian are not only visually stunning but also thought-provoking. They make you wonder about what's out there and humanity's place in the universe." },
+      { q: 'Would you like to travel to outer space in the future?', a: "It's a fascinating idea, and if technology became accessible enough, I'd definitely consider it. However, I'm also aware of the significant risks involved. For now, I'm content with experiencing space through documentaries and visiting planetariums." },
+    ],
+  },
 ]
 
 // ============================================================
@@ -445,6 +510,48 @@ export const part2Topics: Part2Topic[] = [
     cueCard: 'Describe a goal you want to achieve in the next five years. You should say: what the goal is, why you set this goal, what you plan to do to achieve it, and explain how you will feel if you achieve this goal.',
     answer: "The goal I want to achieve is becoming fluent in Japanese. I set this goal because I'm fascinated by Japanese culture and hope to work there someday. To achieve it, I plan to take formal language classes, practice daily with language exchange apps, and ideally spend a summer in Japan for immersion. Two reasons this goal means so much to me. Firstly, it's not just about language — it's about opening doors. Being fluent would allow me to connect with people, understand media, and navigate daily life in Japan without barriers. On top of that, the journey itself is rewarding. Every new word I learn gives me a small sense of achievement. If I reach fluency in five years, I know I'll feel an incredible sense of pride and fulfillment.",
   },
+  {
+    topic: 'Describe a person who likes to grow plants',
+    tag: '新题',
+    cueCard: 'Describe a person you know who likes to grow plants. You should say: who this person is, what plants they grow, why they enjoy growing plants, and explain how you feel about their hobby.',
+    answer: "The person I'd like to talk about is my grandmother. She's been passionate about growing plants ever since I can remember — her balcony is basically a small garden filled with colorful flowers and fresh herbs. She grows everything from roses and jasmine to basil and mint. What makes her genuinely special is that she treats each plant like a living friend. Firstly, she finds gardening deeply relaxing. After a long day, tending to her plants helps her wind down and forget about daily stress. On top of that, she loves the sense of accomplishment when seeds sprout and bloom — she says it reminds her that patience brings rewards. I genuinely admire her dedication. Whenever I visit, I help her water the plants and she teaches me about each one. Her passion has actually inspired me to keep a few small plants in my own room.",
+  },
+  {
+    topic: 'Describe an experience of getting up early',
+    tag: '新题',
+    cueCard: 'Describe a time when you got up very early. You should say: when it was, why you got up early, what you did, and explain how you felt about getting up early.',
+    answer: "I remember a time last summer when I got up at 4:30 in the morning to climb a mountain and watch the sunrise. My friends and I had planned this trip for weeks — we wanted to reach the summit before dawn. Honestly, when the alarm went off, I regretted every life choice that led to that moment. But I dragged myself out of bed and we drove to the trailhead in the dark. The hike was challenging in the dim light, and I was exhausted. But when we finally reached the top and saw the sun rising over the mountains — the sky turning from purple to orange to gold — it was genuinely breathtaking. Two reasons this experience stuck with me. Firstly, it showed me how much you can accomplish before most people even wake up. I felt incredibly productive. On top of that, the beauty of that sunrise was something I'd have completely missed if I'd stayed in bed. It was well worth the early wake-up call.",
+  },
+  {
+    topic: 'Describe a teamwork experience',
+    tag: '新题',
+    cueCard: 'Describe a time when you worked as part of a team. You should say: what the task was, who you worked with, what role you played in the team, and explain what you learned from this experience.',
+    answer: "I'd like to talk about a group presentation I did for my English class last semester. We were a team of four, and our task was to research and present on environmental protection measures in China. I took on the role of coordinating everyone's work and handling the opening section. The experience wasn't entirely smooth — we had some disagreements about how to structure the presentation. One teammate wanted lots of data, while another preferred a more emotional approach. I suggested we blend both — start with hard facts to establish credibility, then add a personal story to connect with the audience. The presentation went well and we got a good grade. Two things I learned. Firstly, communication is everything in teamwork. We wasted time at first because we weren't clear about responsibilities. On top of that, diverse perspectives genuinely strengthen the final result. Each person brought something unique, and that made our work richer.",
+  },
+  {
+    topic: 'Describe a piece of technology you want to own',
+    tag: '新题',
+    cueCard: 'Describe a piece of technology (not a mobile phone) you would like to own. You should say: what it is, what you would use it for, how it works, and explain why you want to own it.',
+    answer: "The tech product I'd really love to own is a high-quality mirrorless camera. Specifically, I've been eyeing the Sony A7 series — one of the full-frame models that professional photographers use. I'd use it primarily for travel photography and capturing everyday moments with friends. What draws me to it is the image quality. Compared to a phone camera, a dedicated mirrorless camera captures far more detail, handles low light beautifully, and gives you creative control over depth of field. Two reasons I want this so badly. Firstly, I'm a big fan of documenting life. Looking back at photos from a few years ago brings me genuine joy, and I want to capture my university years in the best quality possible. On top of that, learning photography would be a rewarding hobby. It combines technical skills with artistic expression, which I find really appealing.",
+  },
+  {
+    topic: 'Describe a tall building you like or dislike',
+    tag: '新题',
+    cueCard: 'Describe a tall building in your city that you like or dislike. You should say: where it is, what it looks like, what it is used for, and explain why you like or dislike it.',
+    answer: "I'd like to talk about the Shanghai Tower, which I visited during a school trip. It's located in Lujiazui, the financial district of Shanghai. Standing at 632 meters, it's one of the tallest buildings in the world with a unique twisting design that looks incredibly modern and sleek. The building is used for offices, a hotel, and observation decks. Why I genuinely like this building — firstly, the view from the observation deck is absolutely stunning. You can see the entire city spread out beneath you, and on a clear day, the sight is truly breathtaking. On top of that, I admire what the building represents. It shows how far Chinese architecture and engineering have come, pushing boundaries in both design and sustainable technology. One interesting thing is that the twisting shape actually reduces wind load by 24% — they managed to combine beauty with smart engineering.",
+  },
+  {
+    topic: 'Describe an interesting video you watched online',
+    tag: '新题',
+    cueCard: 'Describe an interesting video you watched online. You should say: what the video was about, when and where you watched it, who you watched it with, and explain why you found it interesting.',
+    answer: "A video that genuinely captured my attention was a short documentary about how a Japanese craftsman makes traditional handmade washi paper. I stumbled upon it late one night while scrolling through a video platform at home. I watched it alone, but I ended up sharing it with a friend the next day because it was so fascinating. The video showed the entire process — from harvesting the mulberry bark to the careful, patient work of forming each sheet by hand. What made it so interesting — firstly, it was visually stunning. The way the craftsman worked with such precision and calm was almost meditative to watch. On top of that, it made me reflect on our fast-paced world. We're so used to instant, mass-produced everything that we forget the beauty of slow craftsmanship. Watching someone dedicate their entire life to perfecting a single skill was genuinely inspiring.",
+  },
+  {
+    topic: 'Describe a special cake you had',
+    tag: '新题',
+    cueCard: 'Describe a special cake you remember having. You should say: what kind of cake it was, when and where you had it, who you shared it with, and explain why it was special.',
+    answer: "A particularly special cake I remember was my 18th birthday cake. It was a chocolate mousse cake with fresh strawberries on top, custom-made by a local bakery. I had it at home with my family and closest friends gathered around. The moment I saw the cake — with 18 candles lit up — I felt genuinely emotional. Why this cake was so meaningful — firstly, turning 18 is a significant milestone in Chinese culture. It represents the transition into adulthood, and my parents had clearly put thought into making the celebration memorable. On top of that, what touched me most wasn't the cake itself, but what it represented — the people who love me taking time to celebrate my life. My best friend even wrote a card that made me tear up a little. The cake was delicious, but the warmth of that moment is what I'll never forget.",
+  },
 ]
 
 // ============================================================
@@ -564,6 +671,60 @@ export const part3Topics: Part3Topic[] = [
       {
         q: 'Is it the government or individuals responsibility to protect nature?',
         a: "It's genuinely a shared responsibility. Governments have the power to implement large-scale policies and regulations. But without individual cooperation, those policies won't succeed. Every person has a role to play — from recycling at home to supporting environmentally conscious businesses.",
+      },
+    ],
+  },
+  {
+    topic: 'Cities & Architecture',
+    relatedTo: 'Describe a tall building you like or dislike',
+    questions: [
+      {
+        q: 'Why do cities build tall buildings?',
+        a: "Cities build upward mainly due to limited land and growing populations. High-rise buildings maximize the use of valuable urban space — fitting more offices and apartments into a smaller footprint. Additionally, tall buildings often become iconic landmarks that boost a city's global image and attract tourism.",
+      },
+      {
+        q: 'Do you think tall buildings are good for the environment?',
+        a: "It's a complex issue. On one hand, tall buildings concentrate people in a small area, reducing urban sprawl and protecting green spaces outside the city. Modern skyscrapers can also incorporate energy-efficient designs. However, the construction process itself consumes massive resources, and the glass facades of many tall buildings create heat island effects. It genuinely depends on how they're designed.",
+      },
+      {
+        q: 'What makes a building beautiful to you?',
+        a: "For me personally, a beautiful building balances form and function. Clean lines, natural materials, and good proportions matter more than flashy decoration. I also appreciate when a building fits its surroundings rather than dominating them. Natural light inside is another essential factor — a space that feels bright and airy is always more appealing.",
+      },
+    ],
+  },
+  {
+    topic: 'Media & Entertainment',
+    relatedTo: 'Describe an interesting video you watched online',
+    questions: [
+      {
+        q: 'Why do people enjoy watching short videos online?',
+        a: "Short videos are genuinely addictive because they deliver instant gratification. In just 15 to 60 seconds, you get a complete experience — a laugh, a piece of information, or an emotional moment. The algorithm also learns your preferences and keeps feeding you content you'll enjoy, which makes it hard to stop scrolling. From my perspective, it's the perfect format for our increasingly short attention spans.",
+      },
+      {
+        q: 'How has social media changed the way we learn things?',
+        a: "Social media has fundamentally transformed learning by making it more accessible and bite-sized. You can now learn a cooking technique, a language tip, or a science concept in under a minute. However, there's a downside — the information tends to be shallow. Real, deep learning still requires books and sustained focus.",
+      },
+      {
+        q: 'Do you think traditional TV will disappear in the future?',
+        a: "I don't think it will disappear completely, but it will definitely continue to shrink. Traditional TV still serves a purpose for live events like sports and news. However, younger generations overwhelmingly prefer on-demand streaming. TV may evolve into something different, but the concept of watching content on a big screen at home won't vanish.",
+      },
+    ],
+  },
+  {
+    topic: 'Food & Celebration',
+    relatedTo: 'Describe a special cake you had',
+    questions: [
+      {
+        q: 'What role does food play in celebrations in your country?',
+        a: "Food plays a central and essential role in Chinese celebrations. It's not just about eating — it's about bringing people together and expressing care. Every festival has its symbolic dishes: dumplings for Spring Festival representing wealth, mooncakes for Mid-Autumn symbolizing reunion. Sharing a meal is how we strengthen relationships and create lasting memories.",
+      },
+      {
+        q: 'Do you think traditional foods are being replaced by Western foods?',
+        a: "There is some influence from Western food culture, especially among younger generations who enjoy pizza and burgers. However, I don't think traditional foods are genuinely being replaced. For important occasions like festivals and family gatherings, people still overwhelmingly choose traditional dishes. They carry cultural meaning that Western food simply doesn't have.",
+      },
+      {
+        q: 'Is cooking an important skill for young people to learn?',
+        a: "Absolutely. Cooking is a fundamental life skill that gives people independence and healthier eating habits. When you cook your own meals, you control what goes into your food and typically spend less money than eating out. Beyond practicality, cooking can be a creative and relaxing hobby — there's a genuine sense of satisfaction in making something delicious with your own hands.",
       },
     ],
   },
